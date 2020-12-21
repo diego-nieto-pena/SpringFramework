@@ -15,18 +15,18 @@ import org.springframework.stereotype.Service;
 import com.demo.basics.DemoBasics.util.Util;
 
 @Service
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)//PROTOTYPE --> new BinarySearchImpl
 public class BinarySearchImpl {
 	
 	Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Autowired
-	@Qualifier("bubble")
+	//@Qualifier("bubble")
 	private SortAlgorithm sortAlgorithm;
 	
 	@PostConstruct
 	public void postConstruct() {
-		logger.info("PostConstruct");
+		logger.info("PostConstruct ;)");
 	}
 	
 	@PreDestroy
@@ -58,3 +58,4 @@ public class BinarySearchImpl {
 		return mid;
 	}
 }
+

@@ -1,22 +1,40 @@
 package com.principal;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Principal {
 
 	public static void main(String[] args) {
-		Animal a1 = new Dog();
-		Mammal m1 = new Dog();
-		Dog d1 = new Dog();
 		
-		CommonPoint s1 = new Table();
-		CommonPoint s2 = new Dog();
+		List<Procedure> pList = new ArrayList<>();
+		
+		Procedure p1 = new Procedure(15000, 0, 0);
+		Procedure p2 = new Procedure(0, 0, 70000);
+		Procedure p3 = new Procedure(0, 10000, 0);
+		
+		pList.add(p1);
+		pList.add(p2);
+		pList.add(p3);
+	
+		
+		Dog nala = new Dog(pList);
+		
+		System.out.println(nala);
+		
+		int total = sum(pList);
+		
+		System.out.println("Total Value: " + total);
 	}
-
-	public void foo(List<CommonPoint> dogTables) {
-		for(CommonPoint item: dogTables ) {
-			System.out.println(item);
+	
+	private static int sum(List<Procedure> pList) {
+		int total = 0;
+		
+		for(Procedure p : pList) {
+			total += p.getCastration() + p.getShower() + p.getVaccine();
 		}
+		
+		return total;
 	}
+	
 }

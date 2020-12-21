@@ -4,7 +4,7 @@ import com.dependency.injection.dependencyinjection.service.SortService;
 
 public class MyApplication implements Consumer {
 
-	private SortService sortService;
+	private SortService sortService; //Quick
 	
 	public MyApplication(SortService sortService) {
 		this.sortService = sortService;
@@ -17,3 +17,10 @@ public class MyApplication implements Consumer {
 	}
 
 }
+
+//Bubble
+//Insertion
+
+//Quick
+//Jump
+//.......

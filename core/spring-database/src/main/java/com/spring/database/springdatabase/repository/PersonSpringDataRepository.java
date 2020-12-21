@@ -7,4 +7,5 @@ import com.spring.database.springdatabase.entity.Person;
 public interface PersonSpringDataRepository extends
 							JpaRepository<Person, Integer>{
 
+	Person findBytwitterUserName(String username);
 }

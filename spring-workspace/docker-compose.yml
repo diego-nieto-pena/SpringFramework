@@ -1,0 +1,107 @@
+version: '3.4'
+
+services:
+    config-server:
+        build: ./MicroConfigServer
+        container_name: config-server
+        ports:
+            - '8888:8888'
+        restart: always
+        networks:
+            - 'spring-cloud'
+                #ipv4_address: 10.43.0.30
+
+    eureka-server:
+        build: ./MicroEurekaServer
+        container_name: eureka-server
+        ports:
+            - '8761:8761'
+        restart: always
+        networks:
+            - 'spring-cloud'
+                #ipv4_address: 10.43.0.30
+    mysql:
+        image: mysql:8
+        container_name: mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=admin
+            - MYSQL_DATABASE=spring_cloud
+        ports:
+            - '3306:3306'
+        networks:
+            - 'spring-cloud'
+        volumes:
+            - spring-data-docker:/var/lib/mysql
+    
+    products-service:
+        build: ./MicroProductService
+        container_name: products-service
+        depends_on:
+            - config-server
+            - eureka-server
+            - mysql
+        networks:
+            - 'spring-cloud'
+
+    item-service:
+        build: ./MicroItemService
+        container_name: item-service
+        restart: always
+        ports:
+            - '8002:8002'
+            - '8005:8005'
+            - '8007:8007'
+        depends_on:
+            - config-server
+            - eureka-server
+            - products-service
+        networks:
+            - 'spring-cloud'
+
+    user-service:
+        build: ./SecurityUserService
+        container_name: user-service
+        restart: always
+        depends_on:
+            - config-server
+            - eureka-server
+        networks:
+            - spring-cloud
+
+    oauth-service:
+        build: ./SecurityOAuthService
+        container_name: oauth-service
+        restart: always
+        depends_on:
+            - config-server
+            - eureka-server
+            - user-service
+        ports:
+            - '9100:9100'
+        networks:
+            - spring-cloud
+        
+
+    zuul-server:
+        build: ./MicroZuulService
+        container_name: zuul-server
+        depends_on: 
+            - config-server
+            - eureka-server
+            - products-service
+            - item-service
+        ports:
+            - '8765:8765'
+        restart: always
+        networks:
+            - 'spring-cloud'
+
+networks:
+    spring-cloud:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.43.0.0/24
+
+volumes:
+    spring-data-docker:

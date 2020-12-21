@@ -1,10 +1,11 @@
 package com.demo.basics.DemoBasics.algo;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 @Service
-@Qualifier("bubble")
+//@Qualifier("bubble")
+///@Primary
 public class BubbleSort implements SortAlgorithm {
 
 	@Override

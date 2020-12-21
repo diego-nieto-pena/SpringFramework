@@ -12,9 +12,12 @@ public class DemoBasicsXmlContextApplication {
 	public static void main(String[] args) {
 		
 		try(ClassPathXmlApplicationContext appContext = new ClassPathXmlApplicationContext("applicationContext.xml")) {
+			
 			XmlPersonDAO  person = appContext.getBean(XmlPersonDAO.class);
 			
-			logger.info("Loeaded Beans -> {}", (Object) appContext.getBeanDefinitionNames());
+			System.out.println(person);
+			System.out.println(person.getXmlJdbcConnection());
+			//logger.info("Loeaded Beans -> {}", (Object) appContext.getBeanDefinitionNames());
 			
 		}
 	}
